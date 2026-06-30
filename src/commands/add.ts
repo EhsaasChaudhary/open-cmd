@@ -23,7 +23,7 @@ export async function addAction(commandNames: string[], global = false): Promise
       console.error('Run:\n');
       console.error(pc.cyan('  opencode init\n'));
       console.error('or install globally using:\n');
-      console.error(pc.cyan('  open-cmd add --global <command>'));
+      console.error(pc.cyan('  ocmd add --global <command>'));
     }
     process.exit(1);
   }

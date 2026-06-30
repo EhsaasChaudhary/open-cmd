@@ -1,24 +1,24 @@
-# open-cmd
+# ocmd
 
-Generic package manager for AI assistant commands.
+Package manager for AI assistant commands and skills.
 
 ## Installation
 
 ```bash
-npm install -g open-cmd
+npm install -g ocmd
 ```
 
 Or run directly:
 
 ```bash
-npx open-cmd
+npx ocmd
 ```
 
 ## Usage
 
 ```bash
-open-cmd add <commands...>
-open-cmd list
+ocmd add <commands...>
+ocmd list
 ```
 
 ## Development
@@ -32,7 +32,7 @@ npm run dev
 
 ### Registry URL
 
-By default, `open-cmd` fetches commands from the official registry at `EhsaasChaudhary/open-cmd-registry`.
+By default, `ocmd` fetches commands from the official registry at `EhsaasChaudhary/open-cmd-registry`.
 
 Override the registry URL for development, testing, or private registries:
 

@@ -6,7 +6,7 @@ export function createProgram(): Command {
   const program = new Command();
 
   program
-    .name('open-cmd')
+    .name('ocmd')
     .description('Generic package manager for AI assistant commands')
     .version('0.1.0');
 
