@@ -1,5 +1,5 @@
 {
-  "name": "ocmd",
+  "name": "cmdforge",
   "version": "0.1.0",
   "description": "Generic package manager for AI assistant commands",
   "type": "module",

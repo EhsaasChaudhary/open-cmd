@@ -1,20 +1,29 @@
-# ocmd
+# cmdforge
 
 Package manager for AI assistant commands and skills.
 
 ## Installation
 
 ```bash
-npm install -g ocmd
+npm install -g cmdforge
 ```
 
 Or run directly:
 
 ```bash
-npx ocmd
+npx cmdforge
 ```
 
 ## Usage
+
+Run via npx:
+
+```bash
+npx cmdforge add <commands...>
+npx cmdforge list
+```
+
+Or after global install:
 
 ```bash
 ocmd add <commands...>
@@ -32,7 +41,7 @@ npm run dev
 
 ### Registry URL
 
-By default, `ocmd` fetches commands from the official registry at `EhsaasChaudhary/open-cmd-registry`.
+By default, `cmdforge` fetches commands from the official registry at `EhsaasChaudhary/open-cmd-registry`.
 
 Override the registry URL for development, testing, or private registries:
 

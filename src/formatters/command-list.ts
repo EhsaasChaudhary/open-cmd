@@ -20,7 +20,7 @@ export function formatCommandList(entries: RegistryEntry[]): string {
   for (const entry of sorted) {
     lines.push(pc.cyan(entry.displayName));
     lines.push(entry.description);
-    lines.push(pc.dim(`  npx ocmd add ${entry.name}`));
+    lines.push(pc.dim(`  npx cmdforge add ${entry.name}`));
     lines.push(pc.dim(`  ocmd add ${entry.name}`));
     lines.push('');
   }
