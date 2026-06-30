@@ -6,6 +6,7 @@ export type {
   Command,
   CommandPackage,
   CommandProvider,
+  InstallResult,
   Installer,
   Registry,
   RegistryClient,

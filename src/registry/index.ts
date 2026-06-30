@@ -25,7 +25,10 @@ export function createRegistryClient(): RegistryClient {
 
   async function fetchJson<T>(url: string): Promise<T> {
     try {
-      return await $fetch<T>(url, { parseResponse: JSON.parse });
+      const response = await $fetch.raw(url);
+      const raw: unknown = response._data;
+      const text = typeof raw === 'string' ? raw : new TextDecoder().decode(raw as ArrayBuffer);
+      return JSON.parse(text) as T;
     } catch (err: unknown) {
       if (err && typeof err === 'object' && 'statusCode' in err) {
         throw new DownloadError(url, (err as { statusCode: number }).statusCode);
@@ -63,7 +66,7 @@ export function createRegistryClient(): RegistryClient {
 
     const validatedCommands: Record<string, RegistryEntry> = {};
     for (const [key, value] of Object.entries(d.commands as Record<string, unknown>)) {
-      validatedCommands[key] = validateRegistryEntry(value, `${url}#commands.${key}`);
+      validatedCommands[key] = validateRegistryEntry(value, key, `${url}#commands.${key}`);
     }
 
     return {
@@ -76,7 +79,7 @@ export function createRegistryClient(): RegistryClient {
     };
   }
 
-  function validateRegistryEntry(data: unknown, url: string): RegistryEntry {
+  function validateRegistryEntry(data: unknown, name: string, url: string): RegistryEntry {
     if (!data || typeof data !== 'object') {
       throw new RegistryParseError(url, 'Expected a registry entry object');
     }
@@ -99,6 +102,7 @@ export function createRegistryClient(): RegistryClient {
     }
 
     return {
+      name,
       displayName: d.displayName,
       description: d.description,
       provider: d.provider,
@@ -116,6 +120,9 @@ export function createRegistryClient(): RegistryClient {
     if (typeof d.name !== 'string') {
       throw new RegistryParseError(url, 'Missing or invalid name');
     }
+    if (typeof d.displayName !== 'string') {
+      throw new RegistryParseError(url, 'Missing or invalid displayName');
+    }
     if (typeof d.version !== 'string') {
       throw new RegistryParseError(url, 'Missing or invalid version');
     }
@@ -128,17 +135,18 @@ export function createRegistryClient(): RegistryClient {
     if (!Array.isArray(d.keywords)) {
       throw new RegistryParseError(url, 'Missing or invalid keywords');
     }
-    if (typeof d.path !== 'string') {
-      throw new RegistryParseError(url, 'Missing or invalid path');
+    if (typeof d.entry !== 'string') {
+      throw new RegistryParseError(url, 'Missing or invalid entry');
     }
 
     return {
       name: d.name,
+      displayName: d.displayName,
       version: d.version,
       provider: d.provider,
       description: d.description,
       keywords: d.keywords as string[],
-      path: d.path,
+      entry: d.entry,
     };
   }
 
@@ -175,12 +183,9 @@ export function createRegistryClient(): RegistryClient {
     },
 
     async downloadCommand(name: string): Promise<CommandPackage> {
-      const jsonUrl = commandJsonUrl(name);
+      const command = await this.getCommand(name);
       const mdUrl = commandMdUrl(name);
-      const [command, markdown] = await Promise.all([
-        this.getCommand(name),
-        fetchText(mdUrl),
-      ]);
+      const markdown = await fetchText(mdUrl);
       return {
         command,
         files: [{ path: 'command.md', content: markdown }],

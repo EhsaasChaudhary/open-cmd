@@ -1,6 +1,6 @@
-import { OpenCodeCommandProvider } from './open-code.js';
+import { OpenCodeCommandProvider, createOpenCodeProvider } from './open-code.js';
 import type { CommandProvider } from '../types/index.js';
 
 export const commandProviders: CommandProvider[] = [OpenCodeCommandProvider];
 
-export { OpenCodeCommandProvider } from './open-code.js';
+export { OpenCodeCommandProvider, createOpenCodeProvider } from './open-code.js';

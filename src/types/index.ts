@@ -1,4 +1,5 @@
 export interface RegistryEntry {
+  name: string;
   displayName: string;
   description: string;
   provider: string;
@@ -8,11 +9,12 @@ export interface RegistryEntry {
 
 export interface Command {
   name: string;
+  displayName: string;
   version: string;
   provider: string;
   description: string;
   keywords: string[];
-  path: string;
+  entry: string;
 }
 
 export interface CommandFile {
@@ -49,8 +51,14 @@ export interface CommandProvider {
   commandDirectory(): string;
 }
 
+export interface InstallResult {
+  installed: string[];
+  skipped: string[];
+  failed: string[];
+}
+
 export interface Installer {
-  install(pkg: CommandPackage, provider: CommandProvider): Promise<void>;
+  install(pkg: CommandPackage, provider: CommandProvider): Promise<InstallResult>;
 }
 
 export interface RegistryClient {

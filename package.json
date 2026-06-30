@@ -4,7 +4,7 @@
   "description": "Generic package manager for AI assistant commands",
   "type": "module",
   "bin": {
-    "open-cmd": "./bin/open-cmd.js"
+    "open-cmd": "bin/open-cmd.js"
   },
   "exports": {
     ".": {
@@ -42,10 +42,14 @@
     "typescript": "^5.4.0",
     "vitest": "^1.6.0"
   },
+  "homepage": "https://github.com/EhsaasChaudhary/open-cmd#readme",
+  "bugs": {
+    "url": "https://github.com/EhsaasChaudhary/open-cmd/issues"
+  },
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/anomalyco/open-cmd"
+    "url": "git+https://github.com/EhsaasChaudhary/open-cmd.git"
   },
   "keywords": [
     "cli",

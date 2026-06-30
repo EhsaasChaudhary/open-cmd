@@ -12,9 +12,10 @@ export function createProgram(): Command {
 
   program
     .command('add <commands...>')
-    .description('Add one or more commands')
-    .action(async (commands: string[]) => {
-      await addAction(commands);
+    .description('Add commands from the registry (-g for global)')
+    .option('-g, --global', 'Install globally (system-wide)')
+    .action(async (commands: string[], options: { global?: boolean }) => {
+      await addAction(commands, options.global ?? false);
     });
 
   program
